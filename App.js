@@ -14,6 +14,12 @@ const theme = {
     ...DefaultTheme.colors,
     primary: '#F99053',
     accent: '#DC7E47',
+    success: '#47DC70',
+    warning: '#DCCD47',
+    danger: '#DC4747',
+    info: '#47DCDC',
+    light: '#F2F2F2',
+    dark: '#212529' 
   },
 };
 

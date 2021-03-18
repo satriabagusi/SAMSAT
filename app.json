@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "SAMSAT-INDRAMAYU",
-    "slug": "SAMSAT",
+    "name": "SAMSAT INDRAMAYU",
+    "slug": "samsat-indramayu",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -17,18 +17,22 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.groovecreative.samsatindramayu",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.groovecreative.samsatindramayu",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "",
+    "description": "SAMSAT INDRAMAYU",
     "githubUrl": "https://github.com/satriabagusi/SAMSAT.git"
   }
 }
