@@ -20,7 +20,9 @@ import LokasiPelayananSamsatList from './screens/lokasipelayanansamsat/LokasiPel
 
 import JadwalSamlingSamdong from './screens/jadwalsamlingsamdong/JadwalSamlingSamdong';
 import JadwalSamling from './screens/jadwalsamlingsamdong/JadwalSamling';
+import JadwalSamlingList from './screens/jadwalsamlingsamdong/JadwalSamlingList';
 import JadwalSamdong from './screens/jadwalsamlingsamdong/JadwalSamdong';
+import JadwalSamdongList from './screens/jadwalsamlingsamdong/JadwalSamdongList';
 
 import PersyaratanPendaftaran from './screens/persyaratanpendaftaran/PersyaratanPendaftaran';
 
@@ -33,7 +35,7 @@ function InfoPkbStackScreen() {
             initialRouteName="InfoPkb"
             screenOptions={{headerShown:false}}>
                 <InfoPkbStack.Screen name="InfoPkb" component={InfoPkb}/>
-                {/* <InfoPkb.Screen name="InfoPkbDetail" component={InfoPkbDetail}/> */}
+                <InfoPkbStack.Screen name="InfoPkbDetail" component={InfoPkbDetail}/>
             </InfoPkbStack.Navigator>
     );
 }
@@ -90,7 +92,9 @@ function JadwalSamlingSamdongStackScreen(){
         initialRouteName="JadwalSamlingSamdong"
         screenOptions={{headerShown: false}}>
             <JadwalSamlingSamdongStack.Screen name="JadwalSamlingSamdong" component={JadwalSamlingSamdong} />
+            <JadwalSamlingSamdongStack.Screen name="JadwalSamlingList" component={JadwalSamlingList} />
             <JadwalSamlingSamdongStack.Screen name="JadwalSamling" component={JadwalSamling} />
+            <JadwalSamlingSamdongStack.Screen name="JadwalSamdongList" component={JadwalSamdongList} />
             <JadwalSamlingSamdongStack.Screen name="JadwalSamdong" component={JadwalSamdong} />
         </JadwalSamlingSamdongStack.Navigator>
     );

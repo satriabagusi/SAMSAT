@@ -1,16 +1,15 @@
 import React, { Component, useState } from 'react';
-import {Alert, FlatList, ImageBackground, Linking, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ImageBackground, Pressable, StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Surface, Text, Button, ActivityIndicator, useTheme, Card, Avatar, Title, Paragraph } from 'react-native-paper';
+import { Text, useTheme } from 'react-native-paper';
 import { responsiveScreenWidth, responsiveScreenFontSize, responsiveScreenHeight, responsiveWidth, responsiveFontSize, responsiveHeight } from 'react-native-responsive-dimensions';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/core';
-import MapView, { Marker } from 'react-native-maps';
+import { WebView } from 'react-native-webview';
 
-
-function JadwalSamling(props){
+function JadwalSamling({props, navigation, route}){
     const { colors } = useTheme(); 
-    const navigation = useNavigation();
+
+    const { urlId } = route.params;
 
     
     return(
@@ -21,27 +20,20 @@ function JadwalSamling(props){
                     <Pressable onPress={() => {navigation.goBack()}}>
                     <Ionicons name="arrow-back-circle" size={34} color={colors.light} />
                     </Pressable>
-                    <Text style={styles.headerText}>Jadwal Samling</Text>
+                    {urlId == 1 ? 
+                    <Text style={styles.headerText}>Jadwal Samling (Indramayu I)</Text>
+                    : 
+                    <Text style={styles.headerText}>Jadwal Samling (Indramayu II)</Text>
+                    }
 
                 </View>
             </ImageBackground>
 
-
-            <View style={styles.menuSection}>
-                <ScrollView>
-                    <Card style={{marginBottom: 10, width: responsiveScreenWidth(90)}}>
-                        <Card.Title title="Jadwal SAMLING" subtitle="Jadwal Samsat Keliling"/>
-                        <Card.Content>
-                        </Card.Content>
-                    </Card>
-                    <Card style={{marginBottom: 10, width: responsiveScreenWidth(90)}}>
-                        <Card.Title title="Jadwal SAMLING" subtitle="Jadwal Samsat Keliling"/>
-                        <Card.Content>
-                        </Card.Content>
-                    </Card>
-                </ScrollView>
-            
-            </View>
+                {urlId == 1 ? 
+                <WebView source={{ uri: 'https://bapenda.jabarprov.go.id/jadwal-samsat-keliling-samsat-gendong-wilayah-kabupaten-indramayu-i/' }} style={{ marginTop: responsiveScreenHeight(8) }} />
+                :
+                <WebView source={{ uri: 'https://bapenda.jabarprov.go.id/jadwal-samsat-keliling-samsat-gendong-wilayah-kabupaten-indramayu-ii-haurgeulis/' }} style={{ marginTop: responsiveScreenHeight(8) }} />
+                }
 
             
 
@@ -70,8 +62,9 @@ const styles = StyleSheet.create({
     },
     headerText:{
         color: '#FFF', 
-        fontSize: responsiveFontSize(3), 
-        fontFamily: 'Montserrat-Bold'
+        fontSize: responsiveFontSize(2.5), 
+        fontFamily: 'Montserrat-Bold',
+        marginLeft: responsiveScreenWidth(5)
     },
     menuSection:{
         flex: 1,
@@ -79,7 +72,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: responsiveScreenWidth(100),
         height: responsiveScreenHeight(100),
-        marginTop: responsiveScreenHeight(20)
     }, 
     container: {
         flex: 1,

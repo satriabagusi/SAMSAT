@@ -19,12 +19,20 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.groovecreative.samsatindramayu",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.0",
+      "config": {
+        "googleMapsApiKey": "AIzaSyBR1Qu8AvPpms_yrBBmvrnDTIil-i_caw0"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAQyCcEWQZztjPdmQrKFntqBVP3g6mI7dU"
+        }
       },
       "package": "com.groovecreative.samsatindramayu",
       "versionCode": 1

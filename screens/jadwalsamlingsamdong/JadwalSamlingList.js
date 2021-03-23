@@ -8,26 +8,10 @@ import { useNavigation } from '@react-navigation/core';
 import MapView, { Marker } from 'react-native-maps';
 
 
-function LokasiPelayananSamsat(props){
+function JadwalSamlingList(props){
     const { colors } = useTheme(); 
     const navigation = useNavigation();
 
-    const DATA = [
-        {
-            nama: 'Samsat Indramayu',
-            alamat: 'Jl. Gatot Subroto, Kepandean, Kec. Indramayu, Kabupaten Indramayu, Jawa Barat 45214',
-            telp: '(0234) 274301',
-            latitude:"-6.349024376532137", 
-            longitude: "108.32728788261835",
-        },
-        {
-            nama: 'Samsat Outlet Jatibarang',
-            alamat: 'Jl. Sinar, Jatibarang Baru, Kec. Jatibarang, Kabupaten Indramayu, Jawa Barat 45273',
-            telp: '-',
-            latitude:"-6.473231", 
-            longitude: "108.303589",
-        },
-      ];
     
     return(
         <View style={styles.container}>
@@ -37,7 +21,7 @@ function LokasiPelayananSamsat(props){
                     <Pressable onPress={() => {navigation.goBack()}}>
                     <Ionicons name="arrow-back-circle" size={34} color={colors.light} />
                     </Pressable>
-                    <Text style={styles.headerText}>Lokasi Samsat</Text>
+                    <Text style={styles.headerText}>Jadwal Samsat Keliling</Text>
 
                 </View>
             </ImageBackground>
@@ -45,26 +29,33 @@ function LokasiPelayananSamsat(props){
 
             <View style={styles.menuSection}>
                 <ScrollView>
-                    
-                <FlatList
-                    data={DATA}
-                    keyExtractor={(item, index) => item.key}
-                    renderItem={({item }) => (
-                        <Pressable onPress={() => {Platform.OS == "android" ?
-                        Linking.openURL('google.navigation:q='+item.latitude+','+item.longitude+'') :
-                        Linking.openURL('maps://app?saddr=100+101&daddr='+item.latitude+'+'+item.lon+'')
-                        } }>
-                        
+                    <Pressable onPress={() => {
+                        navigation.navigate('JadwalSamling', {
+                            urlId: 1,
+                        });
+                    }}>
                         <Card style={{marginBottom: 10, width: responsiveScreenWidth(90)}}>
-                            <Card.Title title={item.nama} />
-                            <Card.Content>
-                            <Paragraph>{item.alamat}</Paragraph>
-                            <Paragraph>{item.telp}</Paragraph>
+                            <Card.Title 
+                            title="Indramayu I (Kab)" 
+                            subtitle="Jadwal Samsat Keliling Wilayah Indramayu I"
+                            left={(props) => <Avatar.Icon {...props} size={46} icon="car" style={{marginTop:15}} />} />
+                                <Card.Content>
                             </Card.Content>
                         </Card>
-                        </Pressable>
-                        )}
-                />
+                    </Pressable>
+                    <Pressable onPress={() => {navigation.navigate('JadwalSamling', {
+                        urlId: 2
+                    });
+                    }}>
+                        <Card style={{marginBottom: 10, width: responsiveScreenWidth(90)}}>
+                            <Card.Title 
+                            title="Indramayu II (Kab) Hargeulis" 
+                            subtitle="Jadwal Samsat Keliling Wilayah Indramayu II"
+                            left={(props) => <Avatar.Icon {...props} size={46} icon="car" style={{marginTop:15}} />} />
+                                <Card.Content>
+                            </Card.Content>
+                        </Card>
+                    </Pressable>
                 </ScrollView>
             
             </View>
@@ -75,7 +66,7 @@ function LokasiPelayananSamsat(props){
     );
 }
 
-export default LokasiPelayananSamsat;
+export default JadwalSamlingList;
 
 const styles = StyleSheet.create({
     headerBackground:{

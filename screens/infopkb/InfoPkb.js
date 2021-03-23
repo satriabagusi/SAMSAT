@@ -1,35 +1,56 @@
-import React, { Component, useState } from 'react';
-import {ImageBackground, PickerIOSComponent, PickerIOSItem, Pressable, StyleSheet, View } from 'react-native';
+import React, { Component, useState, useEffect } from 'react';
+import {ImageBackground, TextInput, Pressable, StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Text, Button, useTheme, TextInput } from 'react-native-paper';
+import { Text, Button, useTheme, Portal, Modal } from 'react-native-paper';
 import { responsiveScreenWidth, responsiveScreenFontSize, responsiveScreenHeight, responsiveWidth, responsiveFontSize, responsiveHeight } from 'react-native-responsive-dimensions';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/core';
-import PkbForm from '../../assets/components/PkbForm';
-import Dropdown from '../../assets/components/Dropdown';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 
-function InfoPkb(props){
+function InfoPkb({props, navigation}){
     const { colors } = useTheme(); 
-    const navigation = useNavigation();
+
+    const [platId, setPlatId] = useState('1');
+    const [platIdList, setPlatIdList] = useState([ 
+        {label: 'Hitam', value: '1', selected: true},
+        {label: 'Kuning', value: '2'},
+        {label: 'Merah', value: '3'}
+    ]);
 
     const [plat1, setPlat1] = useState('');
     const [plat2, setPlat2] = useState('');
     const [plat3, setPlat3] = useState('');
 
-    const options = [
-        { value:'1', label:'HITAM' },
-        { value:'2', label:'KUNING' },
-        { value:'3', label:'MERAH' }
-      ]
-      
-      const onViewBySelected = (viewBy) => {
-        console.log(viewBy);
-      }
+    const [visible, setVisible] = React.useState(false);
+
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
+
+    function checkPlat(){
+        if(plat1 == '' || plat2 == '' || plat3 == '') {
+            showModal()
+        }else{
+            navigation.navigate('InfoPkbDetail', {p1: plat1, p2: plat2, p3: plat3, pId: platId} );
+        }
+
+    }
+
+
+
     
     return(
         <View style={styles.container}>
             <StatusBar style="light" />
+            <Portal>
+                <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
+                    <Text style={{fontFamily: 'Montserrat-Bold'}}>Plat Nomor Kosong</Text>
+                    <Text style={{fontFamily: 'Montserrat-Regular', marginTop: 20}}>Plat Nomor belum terisi, silahkan periksa kembali</Text>
+                    <Button 
+                    mode="outlined" 
+                    style={{marginTop: 20, borderRadius: 10}}
+                    onPress={hideModal}>Ok</Button>
+                </Modal>
+            </Portal>
             <ImageBackground source={require('../../assets/header.png')} style={styles.headerBackground}>
                 <View style={styles.header}>
                     <Pressable onPress={() => {navigation.goBack()}}>
@@ -42,52 +63,74 @@ function InfoPkb(props){
 
 
             <View style={styles.menuSection}>
-                <View style={{flex:1, flexDirection: 'column', marginBottom: 25, justifyContent: 'center', alignItems: 'center'}}>
 
-                    <View style={{...styles.form}}>
-                        <TextInput
-                        placeholder="E"
-                        mode="outlined"
-                        maxLength={2}
-                        style={{fontFamily:'Montserrat-Bold', fontSize:24,width: 65, textAlign: 'center'}}
-                        keyboardType="default"
-                        onChange={() => console.log("aaa")}
-                        autoCapitalize="characters"
-                        />
-                        <Text style={{...styles.seperator}}>-</Text>
-                        <TextInput
-                        placeholder="0000"
-                        onChange={setPlat2}
-                        mode="outlined"
-                        style={{fontFamily:'Montserrat-Bold', fontSize:24, width: 100, textAlign:'center'}}
-                        maxLength={4}
-                        keyboardType="number-pad"
-                        />
-                        <Text style={{...styles.seperator}}>-</Text>
-                        <TextInput
-                        placeholder="X"
-                        onChange={setPlat3}
-                        mode="outlined"
-                        maxLength={3}
-                        keyboardType="default"
-                        style={{fontFamily:'Montserrat-Bold', fontSize:24, width: 75, textAlign: 'center'}}
-                        autoCapitalize="characters"
-                        />
-                        
-                    </View>
-                    <View style={{ alignItems: 'center', justifyContent: 'center', }}>
-                        <View style={{marginTop: 30}}>
-                            <Text style={{fontSize: 14, fontFamily: 'Montserrat-Bold'}}>Warna TNKB</Text>
-                            <Dropdown defaultValue={'1'} options={options} onDropdownSelected={(viewBy) => onViewBySelected(viewBy)} />
-                        </View>
-
-                        <Button mode="contained" style={{justifyContent: 'center',borderRadius: 5, height: 50, width: 115, zIndex:-1}} onPress={() => console.log()}>
-                            <Ionicons name="search" size={16} color="white"/>
-                            <Text style={{fontWeight:'bold', fontFamily: 'Montserrat-Bold', textAlign: 'center', fontSize: 18, color: 'white'}}>CARI</Text>
-                        </Button>
-                    </View>
+            <View style={{flex:1, flexDirection: 'column', marginBottom: 25, justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{...styles.form}}>
+                    <TextInput
+                    placeholder="E"
+                    mode="outlined"
+                    maxLength={2}
+                    style={{fontFamily:'Montserrat-Bold', fontSize:24,width: 65, textAlign: 'center', borderColor: '#F99053', borderWidth:2, height: 65, borderRadius: 5}}
+                    keyboardType="default"
+                    onChangeText={value => setPlat1(value)}
+                    autoCapitalize="characters"
+                    />
+                    <Text style={{...styles.seperator}}>-</Text>
+                    <TextInput
+                    placeholder="0000"
+                    onChangeText={value => setPlat2(value)}
+                    mode="outlined"
+                    style={{fontFamily:'Montserrat-Bold', fontSize:24, width: 100, textAlign:'center', borderColor: '#F99053', borderWidth:2, height: 65, borderRadius: 5}}
+                    maxLength={4}
+                    keyboardType="number-pad"
+                    />
+                    <Text style={{...styles.seperator}}>-</Text>
+                    <TextInput
+                    placeholder="X"
+                    onChangeText={value => setPlat3(value)}
+                    mode="outlined"
+                    maxLength={3}
+                    keyboardType="default"
+                    style={{fontFamily:'Montserrat-Bold', fontSize:24, width: 95, textAlign: 'center', borderColor: '#F99053', borderWidth:2, height: 65, borderRadius: 5}}
+                    autoCapitalize="characters"
+                    />
+                    
                 </View>
+                <View style={{ alignItems: 'center', justifyContent: 'center', }}>
+                    <View style={{marginTop: 30}}>
+                        <Text style={{fontSize: 14, fontFamily: 'Montserrat-Bold'}}>Warna TNKB</Text>
+                        {/* <Dropdown defaultValue={'1'} options={options} onDropdownSelected={(viewBy) => onViewBySelected(viewBy)} /> */}
+                        <DropDownPicker
+                            items={platIdList}
+                            containerStyle={{height: responsiveHeight(6), width: responsiveWidth(60)}}
+                            style={{backgroundColor: 'white', marginTop: 5}}
+                            labelStyle={{fontFamily: 'Montserrat-Regular', fontSize: 16, justifyContent: 'center'}}
+                            itemStyle={{
+                                justifyContent: 'center',
+                                backgroundColor: 'white',
+                                marginVertical: 3,
+                            }}
+                            dropDownStyle={{backgroundColor: 'white', 
+                            shadowColor: '#000',
+                            shadowOffset: { width: 1, height: 2 },
+                            shadowOpacity: 0.2,
+                            shadowRadius: 3,
+                            elevation: 2}}
+                            value={platId}
+                            onChangeItem={platIdList => setPlatId(platIdList.value)}
+                        />
 
+                    <Button mode="outlined" style={{marginTop: 20, borderRadius: 10,}} onPress={checkPlat}>
+                        <Text style={{fontFamily: 'Montserrat-Bold', fontSize: 18, color: colors.accent}}>
+                            <Ionicons name="search" size={18} style={{color: colors.accent}} />
+                            Cari
+                        </Text>
+                    </Button>
+                    
+                    </View>
+
+        </View>
+    </View>
 
             </View>
 
@@ -136,12 +179,19 @@ const styles = StyleSheet.create({
         marginTop: responsiveHeight(20),
         justifyContent: 'center',
         alignItems: 'center'
+      },
+      seperator: {
+          marginHorizontal: responsiveScreenWidth(2),
+          fontWeight: 'bold',
+          fontSize: 32,
+          fontFamily: 'Montserrat-Bold'
+      },
+
+      containerStyle: {
+        backgroundColor: 'white', 
+        padding: 20,
+        marginHorizontal: responsiveScreenWidth(10),
+        borderRadius: 20
     },
-    seperator: {
-        marginHorizontal: responsiveScreenWidth(2),
-        fontWeight: 'bold',
-        fontSize: 32,
-        fontFamily: 'Montserrat-Bold'
-    }
 
 });

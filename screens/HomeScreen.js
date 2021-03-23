@@ -115,12 +115,12 @@ function HomeScreen({props, navigation}){
                     showsHorizontalScrollIndicator={false}
                     horizontal={true}
                     data={news}
+                    keyExtractor={(item, index) => index.toString()}
                     renderItem={({item }) => (
                         <Pressable onPress={() => WebBrowser.openBrowserAsync(item.url)}>
                         <Surface style={styles.btnNews}>
                             <ImageBackground style={{width: responsiveScreenWidth(85), height: responsiveScreenHeight(20)}}
                             imageStyle={{borderRadius: 10}}
-                            keyExtractor={(item, index) => item.key}
                             source={ {uri:  item.urlToImage} }>
                                 <Text style={styles.newsTitle}>{item.title}</Text>
                                 <View style={{position: 'absolute', height: '100%', width: '100%', backgroundColor: '#000',opacity: 0.3, borderRadius: 10}}/>

@@ -5,7 +5,7 @@ import { Surface, Text, Button, ActivityIndicator, useTheme } from 'react-native
 import { responsiveScreenWidth, responsiveScreenFontSize, responsiveScreenHeight, responsiveWidth, responsiveFontSize, responsiveHeight } from 'react-native-responsive-dimensions';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 
 function LokasiPelayananSamsat(props){
@@ -29,6 +29,7 @@ function LokasiPelayananSamsat(props){
 
             <View style={styles.menuSection}>
             <MapView style={styles.map} 
+            provider="google"
             initialRegion={{
                 latitude: -6.409414,
                 longitude: 108.2955219,
